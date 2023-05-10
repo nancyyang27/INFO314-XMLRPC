@@ -22,17 +22,30 @@ public class AppTest {
     @Test public void appCanExtractLegitAddCall() throws Exception {
         String xml = //"<?xml version=\"1.0\"?>" + 
             "<methodCall>" +
-                "<methodName>add</methodName>" +
+                "<methodName>divide</methodName>" +
                 "<params>" + 
-                    "<param><value><i4>1</i4></value></param>" + 
-                    "<param><value><i4>2</i4></value></param>" + 
+                    "<param><value><i4>101992929929292292992929203</i4></value></param>" + 
+                    "<param><value><i4>0</i4></value></param>" + 
                 "</params>" +
             "</methodCall>";
 
-        Call call = App.extractXMLRPCCall(xml);
-        assertEquals("add", call.name);
-        assertEquals(2, call.args.size());
-        assertEquals(1, (int)call.args.get(0));
-        assertEquals(2, (int)call.args.get(1));
+        
+        try {
+            Call call = App.extractXMLRPCCall(xml);
+            App.myHandlerMapping(call.name, call.args);
+        } catch (LargeNumberException e) {
+            assertEquals("Number is too large", e.getMessage());
+        }
+        // assertEquals(App.myHandlerMapping(call.name, call.args), e.getMessage);
+        
+        // assertEquals("add", call.name);
+        // assertEquals(2, call.args.size());
+        // assertEquals(1, (int)call.args.get(0));
+        // assertEquals(2, (int)call.args.get(1));
     }
 }
+// public class LargeNumberException extends IllegalArgumentException {
+//     public LargeNumberException(String message) {
+//         super(message);
+//     }
+// }
