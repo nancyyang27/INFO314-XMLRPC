@@ -83,8 +83,12 @@ I have ran the following commands on Emily's server (see the screenshot in folde
 * divide(10, 5) = 2
 * modulo(10, 5) = 0
 * add(0) = 0
-* * add(1, 2, 3, 4, 5) = 15
+* add(1, 2, 3, 4, 5) = 15
 * multiply(1, 2, 3, 4, 5) = 120
+
+Here is the result
+![alt text](D46BD2F5-A7C1-4DC6-BDF7-7ED3F9F661D3_4_5005_c.jpeg)
+
 
 ## A note about Gradle
 
