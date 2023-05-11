@@ -29,30 +29,19 @@ public class Client {
     private static String port = "";
     private static String host = "";
     public static void main(String... args) throws Exception {
+        
         try {
             port = args[1];
             host = args[0];
-            
-            // System.out.println(add() == 0);
-            // System.out.println(add(1, 2, 3, 4, 5) == 15);
-            // // System.out.println(add(2, 2147483647) == 2);
-            // System.out.println(subtract(12, 6) == 6);
-            // System.out.println(multiply(3, 4) == 12);
-            // System.out.println(multiply(1, 2, 3, 4, 5) == 120);
-            // System.out.println(modulo(10, 0));
-            // try {
-            //     divide(10, 0);
-            // }
-            // System.out.println(add() == 0);
-            // System.out.println(add(1, 2, 3, 4, 5) == 15);
+            System.out.println(add() == 0);
+            System.out.println(add(1, 2, 3, 4, 5) == 15);
             System.out.println(add(2, 4) == 6);
-            // System.out.println(subtract(12, 6) == 6);
-            // System.out.println(multiply(3, 4) == 12);
-            // System.out.println(multiply(1, 2, 3, 4, 5) == 120);
-            // System.out.println(divide(10, 5) == 2);
-            // System.out.println(modulo(10, 5) == 0);
-            // modulo(10, 0);
-            // System.out.println(modulo(10, 5) == 0);
+            System.out.println(subtract(12, 6) == 6);
+            System.out.println(multiply(3, 4) == 12);
+            System.out.println(multiply(1, 2, 3, 4, 5) == 120);
+            System.out.println(divide(10, 5) == 2);
+            System.out.println(modulo(10, 0) == 0);
+            System.out.println(modulo(10, 5) == 0);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -61,7 +50,7 @@ public class Client {
 
     public static void checkInteger(int val) {
         if ((long) val > Integer.MAX_VALUE || (long) val < Integer.MIN_VALUE) {
-            throw new IllegalArgumentException("number too large");
+            throw new IllegalArgumentException("some of the input value is too large");
         }
     }
 
@@ -286,17 +275,16 @@ public class Client {
             responseBuilder.append(line);
         }
         String responseBody = responseBuilder.toString();
-        System.out.println(responseBody);
-        // do something with the response body
+        // System.out.println(responseBody);
         DocumentBuilder builder = dbf.newDocumentBuilder();
         Document document = builder.parse(new InputSource(new StringReader(responseBody)));
 
         Element root = document.getDocumentElement();
         if (root.getElementsByTagName("fault").getLength() != 0) {
             if (root.getElementsByTagName("int").item(0).getTextContent().equals("3")) {
-                throw new IllegalArgumentException(root.getElementsByTagName("string").item(0).getTextContent());
+                throw new IllegalArgumentException(root.getElementsByTagName("string").item(0).getTextContent() + ": you should only pass in integers");
             } else if (root.getElementsByTagName("int").item(0).getTextContent().equals("1")) {
-                throw new ArithmeticException("divide by zero");
+                throw new ArithmeticException("divide/modulo by zero");
             }
         }
         NodeList nodeList = root.getElementsByTagName("i4");
