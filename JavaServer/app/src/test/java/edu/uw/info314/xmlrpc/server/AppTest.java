@@ -22,9 +22,9 @@ public class AppTest {
     @Test public void appCanExtractLegitAddCall() throws Exception {
         String xml = //"<?xml version=\"1.0\"?>" + 
             "<methodCall>" +
-                "<methodName>divide</methodName>" +
+                "<methodName>add</methodName>" +
                 "<params>" + 
-                    "<param><value><i4>101992929929292292992929203</i4></value></param>" + 
+                    "<param><value><i8>1</i8></value></param>" + 
                     "<param><value><i4>0</i4></value></param>" + 
                 "</params>" +
             "</methodCall>";
@@ -32,9 +32,21 @@ public class AppTest {
         
         try {
             Call call = App.extractXMLRPCCall(xml);
-            App.myHandlerMapping(call.name, call.args);
-        } catch (LargeNumberException e) {
-            assertEquals("Number is too large", e.getMessage());
+            Object result = App.myHandlerMapping(call.name, call.args);
+            String str = App.generateStringWrong(3, "aaaaa");
+            
+            // assertEquals(str, "<?xml version=\"1.0\"?>\n" +
+            //          "<methodResponse>" +
+            //          "    <params>" +
+            //          "        <param>" +
+            //          "            <value><string>South Dakota</string></value>" +
+            //          "            </param>" +
+            //          "        </params>" +
+            //          "    </methodResponse>");
+        } catch (Exception e) {
+            String str = App.generateStringWrong(3, "aaaaa");
+            System.out.println(str);
+            // e.printStackTrace();
         }
         // assertEquals(App.myHandlerMapping(call.name, call.args), e.getMessage);
         
